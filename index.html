@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSE Core Maths — Locus Question Bank</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <style>
+    :root {
+      --blue: #1a3a5c;
+      --light-blue: #e8f0fb;
+      --green: #1a5c2e;
+      --light-green: #e8f5ec;
+      --gold: #c8960c;
+      --gray: #f0f0f0;
+      --border: #ccc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Times New Roman', serif;
+      background: #e9edf2;
+      font-size: 15px;
+    }
+
+    /* ── sidebar ── */
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 220px;
+      height: 100vh;
+      background: var(--blue);
+      color: #fff;
+      overflow-y: auto;
+      z-index: 100;
+      padding: 12px 0;
+    }
+
+    #sidebar h2 {
+      text-align: center;
+      font-size: 13px;
+      padding: 8px 10px 12px;
+      border-bottom: 1px solid #355c8a;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-section {
+      padding: 6px 10px 2px;
+      font-size: 11px;
+      color: #9bb8d8;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .nav-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 6px 14px;
+      background: none;
+      border: none;
+      color: #cde;
+      cursor: pointer;
+      font-family: 'Times New Roman', serif;
+      font-size: 13px;
+      border-left: 3px solid transparent;
+      transition: all .2s;
+    }
+
+    .nav-btn:hover {
+      background: #2a5080;
+      color: #fff;
+    }
+
+    .nav-btn.active {
+      background: #2a5080;
+      border-left-color: #ffd700;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* ── main ── */
+    #main {
+      margin-left: 220px;
+      padding: 30px 40px;
+      min-height: 100vh;
+    }
+
+    .page {
+      display: none;
+      max-width: 860px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ── question card ── */
+    .q-card {
+      background: #fff;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .07);
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+    }
+
+    .q-num {
+      font-size: 17px;
+      font-weight: bold;
+      color: var(--blue);
+    }
+
+    .q-marks {
+      font-size: 13px;
+      color: #555;
+      font-style: italic;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      background: var(--light-blue);
+      color: var(--blue);
+      border: 1px solid #aac4e0;
+      border-radius: 12px;
+      padding: 2px 9px;
+      margin-left: 8px;
+      font-style: normal;
+    }
+
+    .q-text {
+      line-height: 1.9;
+    }
+
+    .q-text p {
+      margin-bottom: 8px;
+    }
+
+    .part {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+
+    .part-label {
+      font-weight: bold;
+    }
+
+    .sub-part {
+      margin-left: 28px;
+      margin-top: 5px;
+    }
+
+    /* ── working space ── */
+    .workspace {
+      margin-top: 22px;
+    }
+
+    .workspace-label {
+      font-size: 12px;
+      color: #888;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .ws-lines {
+      border: 1px dashed #bbb;
+      border-radius: 4px;
+      background: #fafafa;
+      padding: 10px 14px;
+    }
+
+    .ws-line {
+      border-bottom: 1px solid #ddd;
+      height: 32px;
+      margin: 0;
+    }
+
+    .ws-line:last-child {
+      border-bottom: none;
+    }
+
+    /* ── solution ── */
+    .sol-toggle {
+      margin-top: 18px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'Times New Roman', serif;
+      letter-spacing: .5px;
+    }
+
+    .sol-toggle:hover {
+      background: #2a5080;
+    }
+
+    .sol-box {
+      display: none;
+      margin-top: 14px;
+      border: 1px solid #aac4e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .sol-box.open {
+      display: block;
+    }
+
+    .sol-header {
+      background: var(--light-blue);
+      padding: 8px 16px;
+      font-weight: bold;
+      font-size: 13px;
+      color: var(--blue);
+      border-bottom: 1px solid #aac4e0;
+    }
+
+    .sol-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    .sol-table td {
+      padding: 6px 12px;
+      vertical-align: top;
+      border-bottom: 1px solid #e0e8f0;
+    }
+
+    .sol-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .col-sol {
+      width: 72%;
+    }
+
+    .col-mk {
+      width: 8%;
+      text-align: center;
+      color: var(--blue);
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .col-rem {
+      width: 20%;
+      color: #555;
+      font-style: italic;
+      font-size: 12.5px;
+    }
+
+    .sol-table thead td {
+      background: #d0dff0;
+      font-weight: bold;
+      color: #1a3a5c;
+    }
+
+    .mark-total {
+      background: var(--light-blue);
+      padding: 6px 12px;
+      font-weight: bold;
+      color: var(--blue);
+      text-align: right;
+      font-size: 13px;
+      border-top: 2px solid #aac4e0;
+    }
+
+    .ans {
+      background: #fffde7;
+      border: 1px solid #e0c84a;
+      border-radius: 3px;
+      padding: 1px 6px;
+      font-weight: bold;
+    }
+
+    /* highlight box inside solution */
+    .note-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0c040;
+      padding: 6px 10px;
+      margin: 4px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 13px;
+    }
+
+    /* ── print ── */
+    @media print {
+      #sidebar {
+        display: none;
+      }
+
+      #main {
+        margin-left: 0;
+        padding: 15px;
+      }
+
+      .sol-toggle {
+        display: none;
+      }
+
+      .sol-box {
+        display: block !important;
+      }
+
+      .page {
+        display: block !important;
+        page-break-after: always;
+      }
+    }
+
+    /* ── creative tag ── */
+    .tag-new {
+      background: #e8f5ec;
+      color: var(--green);
+      border-color: #88c8a0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════ SIDEBAR ════════════════════ -->
+  <div id="sidebar">
+    <h2>DSE Locus<br>Question Bank</h2>
+
+    <div class="nav-section">Past Paper Questions</div>
+    <button class="nav-btn active" onclick="show(0)">Q1 · Circle &amp; Locus (1)</button>
+    <button class="nav-btn" onclick="show(1)">Q2 · Square &amp; Slope</button>
+    <button class="nav-btn" onclick="show(2)">Q3 · Perp. Bisector Locus</button>
+    <button class="nav-btn" onclick="show(3)">Q4 · Line &amp; Quadrilateral</button>
+    <button class="nav-btn" onclick="show(4)">Q5 · Circle Through 3 Pts</button>
+    <button class="nav-btn" onclick="show(5)">Q6 · Circle &amp; Locus (2)</button>
+    <button class="nav-btn" onclick="show(6)">Q7 · AP⊥PB Locus</button>
+    <button class="nav-btn" onclick="show(7)">Q8 · Rhombus &amp; Area</button>
+
+    <div class="nav-section">Creative Questions</div>
+    <button class="nav-btn" onclick="show(8)">CQ1 · Two Loci &amp; Chord</button>
+    <button class="nav-btn" onclick="show(9)">CQ2 · Semicircle Locus</button>
+    <button class="nav-btn" onclick="show(10)">CQ3 · Midpoint Locus</button>
+    <button class="nav-btn" onclick="show(11)">CQ4 · Equidistant &amp; Tangent</button>
+    <button class="nav-btn" onclick="show(12)">CQ5 · Apollonius Circle (1)</button>
+    <button class="nav-btn" onclick="show(13)">CQ6 · Apollonius Circle (2)</button>
+    <button class="nav-btn" onclick="show(14)">CQ7 · Midpoint of Chord</button>
+    <button class="nav-btn" onclick="show(15)">CQ8 · Angle Bisector Loci</button>
+    <button class="nav-btn" onclick="show(16)">CQ9 · External Tangent</button>
+    <button class="nav-btn" onclick="show(17)">CQ10 · Tangent-Length Locus</button>
+  </div>
+
+  <!-- ════════════════════ MAIN ════════════════════ -->
+  <div id="main">
+
+    <!-- ══════════════════════════════════════════
+     PAGE 0  Q14(p1)  A(-10,0) B(30,0) Circle
+══════════════════════════════════════════════ -->
+    <div class="page active" id="p0">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 1 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">9 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of the points \(A\) and \(B\) are \((-10,\,0)\) and \((30,\,0)\) respectively. The circle
+            \(C\) passes through \(A\) and \(B\). Denote the centre of \(C\) by \(G\). It is given that the
+            \(y\)-coordinate of \(G\) is \(-15\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(C\). <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> The straight line \(L\) passes through \(B\) and \(G\).
+            Another straight line \(\ell\) is parallel to \(L\). Let \(P\) be a moving point in the rectangular
+            coordinate plane such that the perpendicular distance from \(P\) to \(L\) is equal to the perpendicular
+            distance from \(P\) to \(\ell\). Denote the locus of \(P\) by \(\Gamma\). It is given that \(\Gamma\) passes
+            through \(A\).
+            <div class="sub-part"><span class="part-label">(i)</span> Describe the geometric relationship between
+              \(\Gamma\) and \(L\). <em>(1 mark)</em></div>
+            <div class="sub-part"><span class="part-label">(ii)</span> Find the equation of \(\Gamma\). <em>(2
+                marks)</em></div>
+            <div class="sub-part"><span class="part-label">(iii)</span> Suppose that \(\Gamma\) cuts \(C\) at another
+              point \(H\). Someone claims that \(\angle GAH < 70°\). Do you agree? Explain your answer. <em>(3
+                marks)</em></div>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> The \(x\)-coordinate of \(G\) is the midpoint of \(A\) and
+                \(B\):<br>\(\dfrac{-10+30}{2}=10\). So \(G=(10,-15)\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>The radius of \(C\):<br>\(r=\sqrt{(-10-10)^2+(0-(-15))^2}=\sqrt{400+225}=\sqrt{625}=25\)</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Equation of \(C\): \(\displaystyle\class{ans}{(x-10)^2+(y+15)^2=625}\)<br>or equivalently
+                \(x^2+y^2-20x+30y-300=0\)</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(i)</strong> \(\Gamma\) is parallel to \(L\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(ii)</strong> Slope of \(L\) through \(B(30,0)\) and
+                \(G(10,-15)\):<br>\(m_L=\dfrac{-15-0}{10-30}=\dfrac{-15}{-20}=\dfrac{3}{4}\)</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Since \(\Gamma \parallel L\) and \(\Gamma\) passes through
+                \(A(-10,0)\):<br>\(y-0=\tfrac{3}{4}(x-(-10))\)<br>\(\class{ans}{3x-4y+30=0}\)</td>
+              <td>1A</td>
+              <td>or equivalent</td>
+            </tr>
+            <tr>
+              <td><strong>(b)(iii)</strong> \(\tan\angle ABG=\dfrac{3}{4}\), so \(\angle ABG\approx36.87°\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Note that \(\angle BAH=\angle ABG\) (base angles, isosceles \(\triangle ABH\) since \(HA=HB\) as \(H\)
+                lies on \(\Gamma\)) and \(\angle BAG=\angle ABG\) (base angles, since \(GA=GB=r\)).<br>
+                \(\angle GAH=\angle BAH+\angle BAG=2\angle ABG\approx73.74°\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Since \(\angle ABG>35°\), we have \(\angle GAH>70°\).<br><strong>The claim is disagreed.</strong></td>
+              <td>1A</td>
+              <td>f.t.</td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 9 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 1  Q12(p2)  Square ABCD
+══════════════════════════════════════════════ -->
+    <div class="page" id="p1">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 2 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>Denote the origin by \(O\).</p>
+          <div class="part"><span class="part-label">(a)</span> \(A\) and \(B\) are points lying on the positive
+            \(x\)-axis such that the \(x\)-coordinate of \(A\) is greater than the \(x\)-coordinate of \(B\). A vertical
+            line which passes through \(B\) cuts the straight line \(y=mx\) at the point \(C\), where \(m\) is a
+            positive constant such that \(AB=BC\). Let \(D\) be a point such that \(ABCD\) is a square. Express the
+            slope of \(OD\) in terms of \(m\). <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> The coordinates of the points \(M\) and \(N\) are
+            \((6,5)\) and \((10,0)\) respectively. Let \(P\) and \(Q\) be points lying on \(OM\) and \(MN\) respectively
+            while \(R\) and \(S\) be points lying on the \(x\)-axis. If the quadrilateral \(PQRS\) is a square, find the
+            \(x\)-coordinate of \(P\). <em>(4 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Let \(B=(b,0)\). Then \(C=(b,\,mb)\), \(A=(mb+b,\,0)=(b(m+1),0)\), and
+                \(D=(mb+b,\,mb)\).</td>
+              <td>1M</td>
+              <td>for any one</td>
+            </tr>
+            <tr>
+              <td>Slope of \(OD=\dfrac{mb-0}{mb+b-0}=\dfrac{mb}{b(m+1)}=\class{ans}{\dfrac{m}{m+1}}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Slope of \(OM=\dfrac{5-0}{6-0}=\dfrac{5}{6}\).<br>
+                By part (a), slope of \(OQ=\dfrac{5/6}{5/6+1}=\dfrac{5/6}{11/6}=\dfrac{5}{11}\).</td>
+              <td>1M</td>
+              <td>using result of (a)</td>
+            </tr>
+            <tr>
+              <td>Equation of line through \(O\) and \(Q\): \(y=\dfrac{5}{11}x\).<br>
+                Equation of line \(MN\): \(y-0=\dfrac{5-0}{6-10}(x-10)\Rightarrow y=\dfrac{-5}{4}x+\dfrac{25}{2}\)</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Solving \(y=\tfrac{5}{11}x\) and \(y=\tfrac{-5}{4}x+\tfrac{25}{2}\) simultaneously, the coordinates of
+                \(Q\) are \(\left(\dfrac{22}{3},\dfrac{10}{3}\right)\).</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>\(x\)-coordinate of \(P = \dfrac{22}{3} - \dfrac{10}{3} = \class{ans}{4}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 2  Q13(p3)  Gamma: 3x-2y-30=0
+══════════════════════════════════════════════ -->
+    <div class="page" id="p2">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 3 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The straight line \(L\) cuts the positive \(x\)-axis and the positive \(y\)-axis at the points \(M\) and
+            \(N\) respectively. Let \(P\) be a moving point in the rectangular coordinate plane such that \(MP=NP\).
+            Denote the locus of \(P\) by \(\Gamma\). It is given that the equation of \(\Gamma\) is \(3x-2y-30=0\).</p>
+          <div class="part"><span class="part-label">(a)</span> Describe the geometric relationship between \(\Gamma\)
+            and \(MN\). <em>(1 mark)</em></div>
+          <div class="part"><span class="part-label">(b)</span> Find the equation of \(L\). <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(c)</span> Suppose that \(\Gamma\) cuts \(L\) and the \(x\)-axis at
+            the points \(Q\) and \(R\) respectively. Find the area of the quadrilateral \(ONQR\), where \(O\) is the
+            origin. <em>(3 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(\Gamma\) is the perpendicular bisector of \(MN\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Let \(M=(a,0)\) and \(N=(0,b)\). The slope of \(L\) is \(\dfrac{-b}{a}\).<br>
+                Since \(\Gamma\perp L\) (by (a)): \(\left(\dfrac{-b}{a}\right)\!\left(\dfrac{3}{2}\right)=-1\), so
+                \(2a=3b\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>The midpoint of \(MN\) is \(\left(\dfrac{a}{2},\dfrac{b}{2}\right)\), which lies on \(\Gamma\):<br>
+                \(3\!\left(\dfrac{a}{2}\right)-2\!\left(\dfrac{b}{2}\right)-30=0\Rightarrow a=36,\;b=24\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Equation of \(L\): \(y-0=\dfrac{-24}{36}(x-36)\Rightarrow\class{ans}{2x+3y-72=0}\)</td>
+              <td>1A</td>
+              <td>or equivalent</td>
+            </tr>
+            <tr>
+              <td><strong>(c)</strong> \(N=(0,24)\), \(Q\) = intersection of \(\Gamma\) and \(L\):<br>
+                Solving \(3x-2y=30\) and \(2x+3y=72\) gives \(Q=(18,12)\).<br>
+                \(R\) = \(x\)-intercept of \(\Gamma\): set \(y=0\Rightarrow x=10\). So \(R=(10,0)\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Area of \(ONQR\) (trapezoid \(ON\) on \(y\)-axis, \(OR\) on \(x\)-axis):<br>
+                \(=\dfrac{(24)(18)}{2}+\dfrac{(10)(12)}{2}=216+60=\class{ans}{276}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 3  Q12(p4)  L through (-10,11) HPKQ
+══════════════════════════════════════════════ -->
+    <div class="page" id="p3">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 4 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The straight line \(L\) passes through the point \((-10,\,11)\). The slope of \(L\) is \(-2\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(L\). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> The coordinates of the points \(H\) and \(K\) are
+            \((2,5)\) and \((-4,-7)\) respectively. Let \(P\) be a point lying on \(L\) such that \(P\) is equidistant
+            from \(H\) and \(K\).
+            <div class="sub-part"><span class="part-label">(i)</span> Find the coordinates of \(P\). <em>(2 marks)</em>
+            </div>
+            <div class="sub-part"><span class="part-label">(ii)</span> Let \(Q\) be a point such that \(HPKQ\) is a
+              quadrilateral where \(HP=HQ=KQ\). Find the area of the quadrilateral \(HPKQ\). <em>(3 marks)</em></div>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(-2=\dfrac{y-11}{x-(-10)}\Rightarrow\class{ans}{2x+y+9=0}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(i)</strong> \(L: y=-2x-9\). Let \(P=(p,\,-2p-9)\).<br>
+                Setting \(PH=PK\):<br>
+                \(\sqrt{(p-2)^2+(-2p-14)^2}=\sqrt{(p+4)^2+(-2p-2)^2}\)<br>
+                \((p-2)^2+(-2p-14)^2=(p+4)^2+(-2p-2)^2\)<br>
+                Expanding: \(p+5=0\Rightarrow p=-5\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>\(\therefore P=(-5,\,-2(-5)-9)=\class{ans}{(-5,\,1)}\)</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(ii)</strong> \(HP=\sqrt{(2-(-5))^2+(5-1)^2}=\sqrt{49+16}=\sqrt{65}\).<br>
+                \(PK=\sqrt{(-5-(-4))^2+(1-(-7))^2}=\sqrt{1+64}=\sqrt{65}=HP\).<br>
+                So \(P\) lies on the perpendicular bisector of \(HK\), confirming \(Q\) is the reflection of \(P\)
+                through \(HK\) midpoint.</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Since \(HQ=KQ=HP=\sqrt{65}\), point \(Q\) also lies on the perpendicular bisector of \(HK\).<br>
+                Midpoint of \(HK=(-1,-1)\), slope of \(HK=2\), slope of perp. bisector \(=-\tfrac{1}{2}\).<br>
+                Perp. bisector: \(y+1=-\tfrac{1}{2}(x+1)\Rightarrow y=-\tfrac{x}{2}-\tfrac{3}{2}\).<br>
+                Solving \((x-2)^2+(-\tfrac{x}{2}-\tfrac{3}{2}-5)^2=65\):<br>
+                \(x^2+2x-15=0\Rightarrow(x+5)(x-3)=0\Rightarrow x=-5\) (giving \(P\)) or \(x=3\).<br>
+                \(Q=\left(3,\,-3\right)\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Since \(HP=PK=KQ=QH=\sqrt{65}\), \(HPKQ\) is a rhombus.<br>
+                Diagonals: \(HK=\sqrt{(2+4)^2+(5+7)^2}=\sqrt{180}=6\sqrt{5}\)<br>
+                \(PQ=\sqrt{(3+5)^2+(-3-1)^2}=\sqrt{80}=4\sqrt{5}\)<br>
+                Area \(=\dfrac{1}{2}\times6\sqrt{5}\times4\sqrt{5}=\class{ans}{60}\)</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 4  Q13(p5)  Circle P(0,2)Q(4,0)R(9,5)
+══════════════════════════════════════════════ -->
+    <div class="page" id="p4">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 5 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">8 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of the points \(P\), \(Q\), \(R\) and \(M\) are \((0,2)\), \((4,0)\), \((9,5)\) and
+            \((5,8)\) respectively. The circle \(C\) passes through \(P\), \(Q\) and \(R\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(C\). <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> Prove that \(M\) lies inside \(C\). <em>(2 marks)</em>
+          </div>
+          <div class="part"><span class="part-label">(c)</span> Denote the centre of \(C\) by \(G\). Let \(N\) be a
+            point lying on \(C\) such that it is nearest to \(M\).
+            <div class="sub-part"><span class="part-label">(i)</span> Describe the geometric relationship among \(G\),
+              \(M\) and \(N\).</div>
+            <div class="sub-part"><span class="part-label">(ii)</span> Find the equation of the straight line which
+              passes through \(M\) and \(N\). <em>(3 marks)</em></div>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Let the equation of \(C\) be \(x^2+y^2+Dx+Ey+F=0\).<br>
+                Through \(P(0,2)\): \(4+2E+F=0\quad\cdots(1)\)<br>
+                Through \(Q(4,0)\): \(16+4D+F=0\quad\cdots(2)\)<br>
+                Through \(R(9,5)\): \(106+9D+5E+F=0\quad\cdots(3)\)</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>From (1): \(F=-4-2E\). Sub into (2): \(4D-2E=-12\Rightarrow 2D-E=-6\quad\cdots(4)\)<br>
+                Sub \(F\) into (3): \(9D+3E=-102\Rightarrow 3D+E=-34\quad\cdots(5)\)<br>
+                (4)+(5): \(5D=-40\Rightarrow D=-8\)<br>
+                \(E=-10\), \(F=16\)</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Equation of \(C\): \(\class{ans}{(x-4)^2+(y-5)^2=25}\)&ensp;i.e., \(x^2+y^2-8x-10y+16=0\)<br>Centre
+                \(G=(4,5)\), radius \(r=5\).</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Distance from \(G(4,5)\) to \(M(5,8)\):<br>
+                \(\sqrt{(5-4)^2+(8-5)^2}=\sqrt{1+9}=\sqrt{10}\approx3.16\)<br>
+                Since \(\sqrt{10}<5=r\), \(M\) lies inside \(C\). \(\blacksquare\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)(i)</strong> \(G\), \(M\) and \(N\) are <strong>collinear</strong> (they lie on the same
+                straight line, with \(N\) being the point on \(C\) on the ray from \(G\) through \(M\)).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)(ii)</strong> Slope of \(GM=\dfrac{8-5}{5-4}=3\).<br>
+                Line through \(M(5,8)\) with slope 3:<br>
+                \(y-8=3(x-5)\Rightarrow\class{ans}{3x-y-7=0}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 8 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 5  Q14(p6)  O(0,0) A(-40,0) B(0,30)
+══════════════════════════════════════════════ -->
+    <div class="page" id="p5">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 6 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">9 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of the points \(O\), \(A\) and \(B\) are \((0,0)\), \((-40,0)\) and \((0,30)\)
+            respectively. The circle \(C\) passes through \(O\), \(A\) and \(B\). Denote the centre of \(C\) by \(G\).
+          </p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(C\). <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> The straight line \(L_1\) passes through \(B\) and
+            \(G\). \(L_2\) is another straight line which passes through \(O\) and cuts \(L_1\) perpendicularly at
+            \(H\). Let \(P\) be a moving point in the rectangular coordinate plane such that \(AP=PH\). Denote the locus
+            of \(P\) by \(\Gamma\).
+            <div class="sub-part"><span class="part-label">(i)</span> Describe the geometric relationship between
+              \(\Gamma\) and the line segment \(AH\). <em>(1 mark)</em></div>
+            <div class="sub-part"><span class="part-label">(ii)</span> Write down the coordinates of \(H\). <em>(1
+                mark)</em></div>
+            <div class="sub-part"><span class="part-label">(iii)</span> Denote the region bounded by \(\Gamma\) and
+              \(C\) that contains \(G\) by \(S\). Someone claims that the area of \(S\) exceeds \(450\pi\). Is the claim
+              correct? Explain your answer. <em>(4 marks)</em></div>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Let \(x^2+y^2+Dx+Ey+F=0\).<br>
+                Through \(O(0,0)\): \(F=0\).<br>
+                Through \(A(-40,0)\): \(1600-40D=0\Rightarrow D=40\).<br>
+                Through \(B(0,30)\): \(900+30E=0\Rightarrow E=-30\).<br>
+                \(C:\,\class{ans}{(x+20)^2+(y-15)^2=625}\), i.e. \(x^2+y^2+40x-30y=0\).<br>
+                Centre \(G=(-20,15)\), radius \(r=25\).</td>
+              <td>1M, 1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(i)</strong> \(\Gamma\) is the <strong>perpendicular bisector</strong> of \(AH\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(ii)</strong> Slope of \(L_1\) through \(B(0,30)\) and \(G(-20,15)\):<br>
+                \(m_{L_1}=\dfrac{30-15}{0-(-20)}=\dfrac{3}{4}\).<br>
+                \(L_2\) through \(O\) perpendicular to \(L_1\): slope \(-\tfrac{4}{3}\), so \(L_2:
+                y=-\tfrac{4}{3}x\).<br>
+                Intersection of \(L_1\) and \(L_2\):
+                \(\tfrac{3}{4}x+30=-\tfrac{4}{3}x\Rightarrow\tfrac{25}{12}x=-30\Rightarrow x=-\tfrac{72}{5}\).<br>
+                \(y=-\tfrac{4}{3}\cdot(-\tfrac{72}{5})=\tfrac{96}{5}\).<br>
+                \(\class{ans}{H=\!\left(-\tfrac{72}{5},\,\tfrac{96}{5}\right)}\)</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(iii)</strong> \(\Gamma\) is a straight line (perp. bisector of \(AH\)). Find the distance
+                \(d\) from \(G(-20,15)\) to \(\Gamma\).<br>
+                Slope of \(AH=\tfrac{96/5-0}{-72/5+40}=\tfrac{96}{128}=\tfrac{3}{4}\). Midpoint of
+                \(AH=\!\left(-\tfrac{136}{5},\tfrac{48}{5}\right)\).<br>
+                \(\Gamma: y-\tfrac{48}{5}=-\tfrac{4}{3}(x+\tfrac{136}{5})\Rightarrow 4x+3y+80=0\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Distance from \(G(-20,15)\) to \(\Gamma\):<br>
+                \(d=\dfrac{|4(-20)+3(15)+80|}{5}=\dfrac{45}{5}=9\)<br>
+                Area of major circular segment (side containing \(G\)) with chord distance \(d=9\), \(r=25\):<br>
+                Let \(\cos\alpha=\tfrac{9}{25}\Rightarrow\sin\alpha=\tfrac{4\sqrt{34}}{25}\).<br>
+                Area of \(S=\pi r^2-(r^2\alpha-r^2\sin\alpha\cos\alpha)=625\pi-625\arccos\!\tfrac{9}{25}+36\sqrt{34}\).
+              </td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Is \(S>450\pi\)?<br>
+                \(625\pi-625\arccos\tfrac{9}{25}+36\sqrt{34}>450\pi\)<br>
+                \(\Leftrightarrow 175\pi+36\sqrt{34}>625\arccos\tfrac{9}{25}\)<br>
+                \(\text{LHS}\approx175(3.1416)+36(5.831)\approx549.8+209.9=759.7\)<br>
+                \(\text{RHS}\approx625(1.2014)\approx750.9\)<br>
+                Since \(759.7>750.9\), the area of \(S>450\pi\). <strong>The claim is correct.</strong></td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 9 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 6  Q15(p7)  AP⊥PB, A(0,5) B(3,1)
+══════════════════════════════════════════════ -->
+    <div class="page" id="p6">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 7 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">6 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of the points \(A\) and \(B\) are \((0,5)\) and \((3,1)\) respectively. Let \(P\) be a
+            moving point in the rectangular coordinate plane such that \(AP\perp PB\). The locus of \(P\) lies on a
+            circle \(\Gamma\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(\Gamma\). <em>(2 marks)</em>
+          </div>
+          <div class="part"><span class="part-label">(b)</span> \(Q\) is a moving point on \(\Gamma\). \(C=(0,1)\) is a
+            point in the same plane.
+            <div class="sub-part"><span class="part-label">(i)</span> Does \(\Gamma\) pass through \(C\)? Explain your
+              answer.</div>
+            <div class="sub-part"><span class="part-label">(ii)</span> When the slope of \(CQ\) is \(\sqrt{3}\), someone
+              claims that \(\angle CAQ\) is greater than \(100°\). Do you agree? Explain your answer. <em>(4 marks)</em>
+            </div>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Since \(AP\perp PB\), \(P\) lies on the circle with diameter \(AB\).<br>
+                Centre \(=\) midpoint of \(AB=\!\left(\tfrac{3}{2},3\right)\), radius
+                \(=\tfrac{|AB|}{2}=\tfrac{\sqrt{9+16}}{2}=\tfrac{5}{2}\).<br>
+                \(\Gamma:\,\class{ans}{\!\left(x-\tfrac{3}{2}\right)^2+(y-3)^2=\tfrac{25}{4}}\), i.e.,
+                \(x^2+y^2-3x-6y+5=0\).</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(i)</strong> Sub \(C=(0,1)\) into \(\Gamma\): \(0+1-0-6+5=0\,\checkmark\).<br>
+                <strong>Yes, \(\Gamma\) passes through \(C\).</strong>
+              </td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(ii)</strong> Line \(CQ\): \(y=\sqrt{3}\,x+1\). Intersect with \(\Gamma\):<br>
+                \(x^2+(\sqrt{3}x+1)^2-3x-6(\sqrt{3}x+1)+5=0\)<br>
+                \(4x^2-(4\sqrt{3}+3)x=0\Rightarrow x=0\) (point \(C\)) or \(x=\dfrac{4\sqrt{3}+3}{4}\).<br>
+                \(Q=\!\left(\dfrac{4\sqrt{3}+3}{4},\,\dfrac{16+3\sqrt{3}}{4}\right)\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Vectors from \(A(0,5)\):<br>
+                \(\overrightarrow{AC}=(0,-4)\),
+                \(\overrightarrow{AQ}=\!\left(\dfrac{4\sqrt{3}+3}{4},\,\dfrac{3\sqrt{3}-4}{4}\right)\)<br>
+                \(\overrightarrow{AC}\cdot\overrightarrow{AQ}=(-4)\cdot\dfrac{3\sqrt{3}-4}{4}=4-3\sqrt{3}\)<br>
+                \(|\overrightarrow{AQ}|^2=\dfrac{(4\sqrt{3}+3)^2+(3\sqrt{3}-4)^2}{16}=\dfrac{100}{16}\Rightarrow|\overrightarrow{AQ}|=\dfrac{5}{2}\)<br>
+                \(\cos\angle
+                CAQ=\dfrac{4-3\sqrt{3}}{4\cdot\tfrac{5}{2}}=\dfrac{4-3\sqrt{3}}{10}\approx\dfrac{-1.196}{10}\approx-0.120\)
+              </td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Since \(\cos100°\approx-0.174<-0.120=\cos\angle CAQ\) and cosine is decreasing on \([0°,180°]\):<br>
+                  \(\angle CAQ<100°\).<br>
+                    <strong>The claim is disagreed.</strong></td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 6 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 7  Q12(p8)  OABC rhombus A(2t,3t) B(5t,5t)
+══════════════════════════════════════════════ -->
+    <div class="page" id="p7">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Question 8 <span class="tag">Past Paper</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>Denote the origin by \(O\). The coordinates of the points \(A\) and \(B\) are \((2t,\,3t)\) and
+            \((5t,\,5t)\) respectively, where \(t\) is a positive constant. Denote the reflection image of \(A\) with
+            respect to \(OB\) by \(C\).</p>
+          <div class="part"><span class="part-label">(a)</span> Someone claims that \(OABC\) is a rhombus. Do you agree?
+            Explain your answer. <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> If the area of \(OABC\) is \(245\), find the coordinates
+            of \(C\). <em>(4 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Slope of \(OB=\dfrac{5t}{5t}=1\), so the line \(OB\) has equation \(y=x\).<br>
+                Reflecting \(A(2t,3t)\) over \(y=x\) swaps coordinates: \(C=(3t,\,2t)\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>\(\overrightarrow{OA}=(2t,3t)\) and
+                \(\overrightarrow{CB}=B-C=(5t-3t,5t-2t)=(2t,3t)=\overrightarrow{OA}\).<br>
+                So \(OA\parallel CB\) and \(|OA|=|CB|\Rightarrow OABC\) is a parallelogram.</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>\(|OA|=\sqrt{4t^2+9t^2}=t\sqrt{13}\) and \(|OC|=\sqrt{9t^2+4t^2}=t\sqrt{13}=|OA|\).<br>
+                Since all four sides are equal, <strong>\(OABC\) is a rhombus. Agree.</strong></td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Area of rhombus \(OABC\) by shoelace formula with
+                \(O(0,0),A(2t,3t),B(5t,5t),C(3t,2t)\):<br>
+                \(=\tfrac{1}{2}|0(3t-2t)+2t(5t-0)+5t(2t-3t)+3t(0-5t)|\)<br>
+                \(=\tfrac{1}{2}|0+10t^2-5t^2-15t^2|=\tfrac{1}{2}\cdot10t^2=5t^2\)</td>
+              <td>1M, 1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>\(5t^2=245\Rightarrow t^2=49\Rightarrow t=7\) (since \(t>0\)).<br>
+                \(C=(3\times7,\,2\times7)=\class{ans}{(21,\,14)}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 8  CQ1  Two Loci Intersection
+══════════════════════════════════════════════ -->
+    <div class="page" id="p8">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 1 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of the points \(A\) and \(B\) are \((0,6)\) and \((8,0)\) respectively.</p>
+          <div class="part"><span class="part-label">(a)</span> \(P\) is a moving point such that \(PA=PB\). Find the
+            equation of the locus \(\Gamma_1\) of \(P\). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> \(Q\) is a moving point such that \(AQ\perp QB\). Find
+            the equation of the locus \(\Gamma_2\) of \(Q\) (excluding \(A\) and \(B\)). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(c)</span> \(\Gamma_1\) and \(\Gamma_2\) intersect at points \(M\)
+            and \(N\). Find the length \(|MN|\). <em>(3 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(\Gamma_1\) is the perpendicular bisector of \(AB\).<br>
+                Midpoint of \(AB=(4,3)\). Slope of \(AB=\tfrac{-3}{4}\), so slope of \(\Gamma_1=\tfrac{4}{3}\).<br>
+                \(y-3=\tfrac{4}{3}(x-4)\Rightarrow\class{ans}{4x-3y-7=0}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Since \(AQ\perp QB\), \(Q\) lies on the circle with diameter \(AB\).<br>
+                Centre \(=(4,3)\), radius \(=\tfrac{|AB|}{2}=\tfrac{\sqrt{64+36}}{2}=5\).<br>
+                \(\Gamma_2:\,\class{ans}{(x-4)^2+(y-3)^2=25}\), i.e., \(x^2+y^2-8x-6y=0\).</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)</strong> From \(\Gamma_1\): \(y=\tfrac{4x-7}{3}\). Sub into \(\Gamma_2\):<br>
+                \(x^2+\left(\tfrac{4x-7}{3}\right)^2-8x-6\cdot\tfrac{4x-7}{3}=0\)<br>
+                Multiply by 9: \(9x^2+(4x-7)^2-72x-18(4x-7)=0\)<br>
+                \(25x^2-200x+175=0\Rightarrow x^2-8x+7=0\Rightarrow(x-1)(x-7)=0\)</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>\(x=1\Rightarrow y=-1\): \(M=(1,-1)\);&ensp;\(x=7\Rightarrow y=7\): \(N=(7,7)\).<br>
+                \(|MN|=\sqrt{(7-1)^2+(7-(-1))^2}=\sqrt{36+64}=\class{ans}{10}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 9  CQ2  Semicircle locus & tangent
+══════════════════════════════════════════════ -->
+    <div class="page" id="p9">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 2 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">5 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of the points \(A\) and \(B\) are \((-3,0)\) and \((3,0)\) respectively. \(P\) is a moving
+            point such that \(\angle APB=90°\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of the locus \(\Gamma\) of \(P\)
+            (excluding \(A\) and \(B\)). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> The straight line \(L: y=kx+6\) is tangent to
+            \(\Gamma\). Find the values of \(k\). <em>(3 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Since \(\angle APB=90°\), \(P\) lies on the circle with diameter \(AB\).<br>
+                Centre \(=(0,0)\), radius \(=3\).<br>
+                \(\Gamma:\,\class{ans}{x^2+y^2=9}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Rewrite \(L\) as \(kx-y+6=0\).<br>
+                Perpendicular distance from centre \((0,0)\) to \(L\) equals the radius:<br>
+                \(\dfrac{|k(0)-0+6|}{\sqrt{k^2+1}}=3\)</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>\(\dfrac{36}{k^2+1}=9\Rightarrow k^2+1=4\Rightarrow k^2=3\)<br>
+                \(\class{ans}{k=\pm\sqrt{3}}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 5 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 10  CQ3  Midpoint Locus & common chord
+══════════════════════════════════════════════ -->
+    <div class="page" id="p10">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 3 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>Circle \(C_1\) has equation \(x^2+y^2=16\). \(O\) is the origin, \(A=(6,0)\). \(P\) is a moving point on
+            \(C_1\), and \(M\) is the midpoint of \(AP\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of the locus \(\Gamma\) of \(M\).
+            <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> \(C_1\) and \(\Gamma\) intersect at points \(X\) and
+            \(Y\). Find the length \(|XY|\). <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(c)</span> Someone claims that \(\angle XAY>30°\). Do you agree?
+            Explain your answer. <em>(2 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Let \(M=(a,b)\). Then \(P=(2a-6,\,2b)\).<br>
+                Since \(P\) lies on \(C_1\): \((2a-6)^2+(2b)^2=16\Rightarrow4(a-3)^2+4b^2=16\).<br>
+                \(\Gamma:\,\class{ans}{(x-3)^2+y^2=4}\) — a circle with centre \(G'=(3,0)\) and radius 2.</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Subtract the equations of \(\Gamma\) and \(C_1\):<br>
+                \(C_1: x^2+y^2=16\)<br>
+                \(\Gamma: x^2-6x+9+y^2=4\Rightarrow x^2+y^2=6x-5\)<br>
+                Hence \(16=6x-5\Rightarrow x=\dfrac{7}{2}\).</td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Sub \(x=\tfrac{7}{2}\) into \(C_1\): \(y^2=16-\tfrac{49}{4}=\tfrac{15}{4}\Rightarrow
+                y=\pm\dfrac{\sqrt{15}}{2}\).<br>
+                \(X=\!\left(\tfrac{7}{2},\tfrac{\sqrt{15}}{2}\right)\),
+                \(Y=\!\left(\tfrac{7}{2},-\tfrac{\sqrt{15}}{2}\right)\).<br>
+                \(|XY|=\class{ans}{\sqrt{15}}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)</strong>
+                \(AX^2=\!\left(6-\tfrac{7}{2}\right)^2+\!\left(\tfrac{\sqrt{15}}{2}\right)^2=\tfrac{25}{4}+\tfrac{15}{4}=10\),
+                and by symmetry \(AY=AX=\sqrt{10}\).<br>
+                By the cosine rule:<br>
+                \(\cos\angle XAY=\dfrac{AX^2+AY^2-XY^2}{2\cdot AX\cdot AY}=\dfrac{10+10-15}{20}=\dfrac{1}{4}\)<br>
+                \(\angle XAY=\arccos\!\tfrac{1}{4}\approx75.5°>30°\).<br>
+                <strong>The claim is agreed.</strong>
+              </td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 11  CQ4  Equidistant from parallel lines → tangent
+══════════════════════════════════════════════ -->
+    <div class="page" id="p11">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 4 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">6 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The straight lines \(L_1: 3x+4y-20=0\) and \(L_2: 3x+4y+10=0\) are parallel. \(P\) is a moving point
+            equidistant from \(L_1\) and \(L_2\). Denote the locus of \(P\) by \(\Gamma\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(\Gamma\). <em>(2 marks)</em>
+          </div>
+          <div class="part"><span class="part-label">(b)</span> The circle \(C\) has equation \(x^2+y^2-6x-8y+9=0\).
+            <div class="sub-part"><span class="part-label">(i)</span> Find the centre \(G\) and radius \(r\) of \(C\).
+              <em>(1 mark)</em></div>
+            <div class="sub-part"><span class="part-label">(ii)</span> Show that \(\Gamma\) is tangent to \(C\) and find
+              the point of tangency. <em>(3 marks)</em></div>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> Equidistant from two parallel lines \(\Rightarrow\) midline.<br>
+                \(\Gamma: 3x+4y+\dfrac{-20+10}{2}=0\Rightarrow\class{ans}{3x+4y-5=0}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(i)</strong> \(C: x^2+y^2-6x-8y+9=0\Rightarrow(x-3)^2+(y-4)^2=16\).<br>
+                \(\class{ans}{G=(3,4)}\), \(\class{ans}{r=4}\).</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(ii)</strong> Perpendicular distance from \(G(3,4)\) to \(\Gamma\):<br>
+                \(d=\dfrac{|3(3)+4(4)-5|}{\sqrt{9+16}}=\dfrac{|9+16-5|}{5}=\dfrac{20}{5}=4=r\,\checkmark\)<br>
+                Since the distance from \(G\) to \(\Gamma\) equals the radius, \(\Gamma\) is tangent to \(C\).
+                \(\blacksquare\)</td>
+              <td>1M, 1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>The point of tangency is the foot of perpendicular from \(G(3,4)\) to \(\Gamma\):<br>
+                \(\text{foot}=(3,4)-\dfrac{|3(3)+4(4)-5|}{5^2}\cdot(3,4)=(3,4)-\dfrac{4}{5}\cdot(3,4)\)<br>
+                \(=\!\left(3-\tfrac{12}{5},\,4-\tfrac{16}{5}\right)=\class{ans}{\!\left(\tfrac{3}{5},\,\tfrac{4}{5}\right)}\)
+              </td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 6 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 12  CQ5  Apollonius circle PO:PA=1:2
+══════════════════════════════════════════════ -->
+    <div class="page" id="p12">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 5 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">6 marks</span>
+        </div>
+        <div class="q-text">
+          <p>\(O\) is the origin and \(A=(3,0)\). \(P\) is a moving point such that \(PO:PA=1:2\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of the locus \(\Gamma\) of \(P\).
+            Describe \(\Gamma\) geometrically. <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> The straight line \(L: y=x+k\) is tangent to \(\Gamma\).
+            Find the values of \(k\). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(c)</span> A tangent is drawn from \(A\) to \(\Gamma\). Find the
+            length of the tangent. <em>(2 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(PO=\tfrac{1}{2}PA\Rightarrow4PO^2=PA^2\).<br>
+                \(4(x^2+y^2)=(x-3)^2+y^2\)<br>
+                \(3x^2+3y^2+6x-9=0\Rightarrow x^2+y^2+2x-3=0\)<br>
+                \(\class{ans}{(x+1)^2+y^2=4}\) — a circle with centre \(G'=(-1,0)\) and radius 2.</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Rewrite \(L\) as \(x-y+k=0\). Distance from \((-1,0)\) to \(L\) equals 2:<br>
+                \(\dfrac{|-1-0+k|}{\sqrt{2}}=2\Rightarrow|k-1|=2\sqrt{2}\)<br>
+                \(\class{ans}{k=1+2\sqrt{2}\text{ or }k=1-2\sqrt{2}}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)</strong> Distance from \(A(3,0)\) to centre \((-1,0)\): \(|AG'|=4\).<br>
+                Length of tangent \(=\sqrt{|AG'|^2-r^2}=\sqrt{16-4}=\class{ans}{2\sqrt{3}}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 6 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 13  CQ6  Apollonius circle PA=2PB range k
+══════════════════════════════════════════════ -->
+    <div class="page" id="p13">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 6 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">5 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of \(A\) and \(B\) are \((-2,0)\) and \((1,0)\) respectively. \(P\) is a moving point such
+            that \(PA=2PB\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of the locus \(\Gamma\) of \(P\).
+            <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> A straight line \(L\) passes through \(A\) with slope
+            \(k\). Find the range of values of \(k\) such that \(L\) intersects \(\Gamma\) at two distinct points.
+            <em>(3 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(PA^2=4PB^2\):<br>
+                \((x+2)^2+y^2=4[(x-1)^2+y^2]\)<br>
+                \(x^2+4x+4+y^2=4x^2-8x+4+4y^2\Rightarrow3x^2+3y^2-12x=0\)<br>
+                \(\class{ans}{(x-2)^2+y^2=4}\) — centre \(G=(2,0)\), radius 2.</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Equation of \(L\) through \(A(-2,0)\): \(y=k(x+2)\), i.e., \(kx-y+2k=0\).<br>
+                For two intersections, perpendicular distance from \(G(2,0)\) to \(L\) must be less than 2:<br>
+                \(\dfrac{|2k+2k|}{\sqrt{k^2+1}}<2\Rightarrow\dfrac{|4k|}{\sqrt{k^2+1}}<2\)< /td>
+              <td>1M</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Squaring: \(16k^2<4(k^2+1)\Rightarrow12k^2<4\Rightarrow k^2<\dfrac{1}{3}\)<br>
+                  (The vertical line \(x=-2\) has distance 4 from \(G\), which is \(>2\), so it does not give two
+                  intersections.)<br>
+                  \(\class{ans}{-\dfrac{\sqrt{3}}{3}<k<\dfrac{\sqrt{3}}{3}}\)< /td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 5 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 14  CQ7  Double midpoint locus
+══════════════════════════════════════════════ -->
+    <div class="page" id="p14">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 7 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">6 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of \(A\), \(B\) and \(C\) are \((0,0)\), \((6,0)\) and \((9,0)\) respectively. \(P\) is a
+            moving point such that \(\angle APB=90°\). \(Q\) is the midpoint of \(PC\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of the locus \(\Gamma_1\) of \(P\)
+            (excluding \(A\) and \(B\)). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> Find the equation of the locus \(\Gamma_2\) of \(Q\).
+            <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(c)</span> Find the coordinates of the point on \(\Gamma_2\)
+            nearest to \(A\). <em>(2 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(\angle APB=90°\Rightarrow P\) lies on circle with diameter \(AB\).<br>
+                Centre \(=(3,0)\), radius \(=3\).<br>
+                \(\Gamma_1:\,\class{ans}{(x-3)^2+y^2=9}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> Let \(Q=(a,b)\). Then \(P=(2a-9,\,2b)\) (since \(Q\) is midpoint of \(PC\),
+                \(C=(9,0)\)).<br>
+                \(P\) on \(\Gamma_1\): \((2a-9-3)^2+(2b)^2=9\Rightarrow4(a-6)^2+4b^2=9\)<br>
+                \(\Gamma_2:\,\class{ans}{(x-6)^2+y^2=\dfrac{9}{4}}\) — centre \((6,0)\), radius \(\dfrac{3}{2}\).</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)</strong> The direction from \(A(0,0)\) to centre \((6,0)\) is the positive
+                \(x\)-direction.<br>
+                Nearest point on \(\Gamma_2\) to \(A\)
+                \(=\left(6-\tfrac{3}{2},\,0\right)=\class{ans}{\!\left(\tfrac{9}{2},\,0\right)}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 6 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 15  CQ8  Angle bisector loci & tangent
+══════════════════════════════════════════════ -->
+    <div class="page" id="p15">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 8 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The straight lines \(L_1: x+y-8=0\) and \(L_2: x-y=0\) intersect at the point \(A\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the coordinates of \(A\). <em>(1 mark)</em></div>
+          <div class="part"><span class="part-label">(b)</span> \(P\) is a moving point equidistant from \(L_1\) and
+            \(L_2\). The locus of \(P\) consists of two straight lines \(\Gamma_1\) and \(\Gamma_2\). Find their
+            equations. <em>(3 marks)</em></div>
+          <div class="part"><span class="part-label">(c)</span> The circle \(C\) has equation \(x^2+y^2-6x-8y+k=0\),
+            where \(k\) is a constant.
+            <div class="sub-part"><span class="part-label">(i)</span> Find the centre \(G\) and radius \(r\) (in terms
+              of \(k\)) of \(C\). State the condition on \(k\). <em>(1 mark)</em></div>
+            <div class="sub-part"><span class="part-label">(ii)</span> It is given that \(G\) lies on \(\Gamma_1\). If
+              \(C\) is tangent to \(\Gamma_2\), find \(k\). <em>(2 marks)</em></div>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(x+y=8\) and \(x-y=0\Rightarrow x=4,y=4\). \(\class{ans}{A=(4,4)}\).</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> \(\dfrac{x+y-8}{\sqrt{2}}=\pm\dfrac{x-y}{\sqrt{2}}\Rightarrow
+                x+y-8=\pm(x-y)\)<br>
+                Case 1: \(x+y-8=x-y\Rightarrow2y=8\Rightarrow\class{ans}{\Gamma_1: y=4}\)<br>
+                Case 2: \(x+y-8=-(x-y)\Rightarrow2x=8\Rightarrow\class{ans}{\Gamma_2: x=4}\)<br>
+                (Both pass through \(A(4,4)\), and \(\Gamma_1\perp\Gamma_2\) as expected for angle bisectors.)</td>
+              <td>1M, 1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)(i)</strong> \(C:(x-3)^2+(y-4)^2=25-k\).<br>
+                \(\class{ans}{G=(3,4)}\), \(r=\sqrt{25-k}\). For a valid circle: \(\class{ans}{k<25}\).< /td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)(ii)</strong> \(G=(3,4)\): sub into \(\Gamma_1\) (\(y=4\)): \(4=4\,\checkmark\). \(G\) lies
+                on \(\Gamma_1\). ✓<br>
+                Perpendicular distance from \(G(3,4)\) to \(\Gamma_2\) (\(x=4\)): \(d=|3-4|=1\).<br>
+                For tangency: \(r=d\Rightarrow\sqrt{25-k}=1\Rightarrow25-k=1\Rightarrow\class{ans}{k=24}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 16  CQ9  AP⊥PB, tangent from external pt
+══════════════════════════════════════════════ -->
+    <div class="page" id="p16">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 9 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">6 marks</span>
+        </div>
+        <div class="q-text">
+          <p>The coordinates of \(A\) and \(B\) are \((0,4)\) and \((4,0)\) respectively. \(P\) is a moving point such
+            that \(AP\perp PB\). The locus of \(P\) lies on a circle \(\Gamma\) with centre \(G\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(\Gamma\) and state the centre
+            \(G\) and radius \(r\). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(b)</span> Let \(C=(2,6)\).
+            <div class="sub-part"><span class="part-label">(i)</span> Determine whether \(C\) is inside or outside
+              \(\Gamma\). Explain your answer. <em>(1 mark)</em></div>
+            <div class="sub-part"><span class="part-label">(ii)</span> Find the length of the tangent drawn from \(C\)
+              to \(\Gamma\). <em>(2 marks)</em></div>
+          </div>
+          <div class="part"><span class="part-label">(c)</span> Let \(N\) be the point on \(\Gamma\) nearest to \(C\).
+            Find the coordinates of \(N\). <em>(1 mark)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(AP\perp PB\Rightarrow P\) lies on circle with diameter \(AB\).<br>
+                Centre \(G=\) midpoint of \(AB=(2,2)\), radius
+                \(r=\tfrac{|AB|}{2}=\tfrac{\sqrt{16+16}}{2}=2\sqrt{2}\).<br>
+                \(\Gamma:\,\class{ans}{(x-2)^2+(y-2)^2=8}\), i.e., \(x^2+y^2-4x-4y=0\).</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(i)</strong> \(|CG|=\sqrt{(2-2)^2+(6-2)^2}=4\).<br>
+                Since \(|CG|=4>2\sqrt{2}\approx2.83=r\), <strong>\(C\) is outside \(\Gamma\)</strong>.</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)(ii)</strong> Length of tangent \(=\sqrt{|CG|^2-r^2}=\sqrt{16-8}=\class{ans}{2\sqrt{2}}\)
+              </td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)</strong> The unit vector from \(G(2,2)\) toward \(C(2,6)\) is \((0,1)\).<br>
+                \(N=G+r\cdot(0,1)=(2,\,2+2\sqrt{2})=\class{ans}{(2,\;2+2\sqrt{2})}\)</td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 6 marks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE 17  CQ10  Tangent-length locus
+══════════════════════════════════════════════ -->
+    <div class="page" id="p17">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Creative Question 10 <span class="tag tag-new">New</span></span>
+          <span class="q-marks">7 marks</span>
+        </div>
+        <div class="q-text">
+          <p>Circle \(C_1\) has equation \((x-3)^2+(y-1)^2=25\) with centre \(G\). \(P\) is a moving point such that the
+            length of the tangent drawn from \(P\) to \(C_1\) equals \(\dfrac{|PG|}{\sqrt{2}}\). Denote the locus of
+            \(P\) by \(\Gamma\).</p>
+          <div class="part"><span class="part-label">(a)</span> Find the equation of \(\Gamma\). <em>(2 marks)</em>
+          </div>
+          <div class="part"><span class="part-label">(b)</span> Describe the relationship between \(C_1\) and
+            \(\Gamma\). <em>(1 mark)</em></div>
+          <div class="part"><span class="part-label">(c)</span> Find the equations of the two horizontal tangent lines
+            to \(\Gamma\). <em>(2 marks)</em></div>
+          <div class="part"><span class="part-label">(d)</span> Explain why neither horizontal tangent to \(\Gamma\)
+            intersects \(C_1\). <em>(2 marks)</em></div>
+        </div>
+        <div class="workspace">
+          <div class="workspace-label">Working Space</div>
+          <div class="ws-lines">
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+            <div class="ws-line"></div>
+          </div>
+        </div>
+        <button class="sol-toggle" onclick="toggleSol(this)">▶ Show Solution</button>
+        <div class="sol-box">
+          <div class="sol-header">Solution</div>
+          <table class="sol-table">
+            <thead>
+              <tr>
+                <td class="col-sol">Working</td>
+                <td class="col-mk">Mark</td>
+                <td class="col-rem">Remark</td>
+              </tr>
+            </thead>
+            <tr>
+              <td><strong>(a)</strong> \(G=(3,1)\), \(r_1=5\). Tangent length from \(P\) to \(C_1\):
+                \(\sqrt{|PG|^2-25}=\dfrac{|PG|}{\sqrt{2}}\).<br>
+                Squaring: \(|PG|^2-25=\dfrac{|PG|^2}{2}\Rightarrow\dfrac{|PG|^2}{2}=25\Rightarrow|PG|^2=50\).<br>
+                \(\Gamma:\,\class{ans}{(x-3)^2+(y-1)^2=50}\) — a circle with centre \(G=(3,1)\) and radius
+                \(r_2=5\sqrt{2}\).</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(b)</strong> \(C_1\) and \(\Gamma\) are <strong>concentric</strong> (same centre \(G=(3,1)\)),
+                with \(C_1\) inside \(\Gamma\) since \(r_1=5<5\sqrt{2}=r_2\).< /td>
+              <td>1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(c)</strong> Horizontal tangents to \(\Gamma\) have the form \(y=c\). Distance from \(G(3,1)\)
+                to \(y=c\) equals \(r_2\):<br>
+                \(|c-1|=5\sqrt{2}\Rightarrow\class{ans}{y=1+5\sqrt{2}\text{ or }y=1-5\sqrt{2}}\)</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>(d)</strong> For either tangent \(y=1\pm5\sqrt{2}\), the distance from \(G(3,1)\) to this line
+                is \(5\sqrt{2}\).<br>
+                Since \(5\sqrt{2}>5=r_1\), the distance from \(G\) to each tangent exceeds the radius of \(C_1\).<br>
+                Therefore neither horizontal tangent to \(\Gamma\) intersects \(C_1\).</td>
+              <td>1M, 1A</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="mark-total">Total: 7 marks</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end #main -->
+
+  <script>
+    // ── Page navigation ──
+    const pages = document.querySelectorAll('.page');
+    const btns = document.querySelectorAll('.nav-btn');
+
+    function show(idx) {
+      pages.forEach((p, i) => {
+        p.classList.toggle('active', i === idx);
+      });
+      btns.forEach((b, i) => {
+        b.classList.toggle('active', i === idx);
+      });
+      document.getElementById('main').scrollTop = 0;
+      window.scrollTo(0, 0);
+    }
+
+    // ── Solution toggle ──
+    function toggleSol(btn) {
+      const box = btn.nextElementSibling;
+      box.classList.toggle('open');
+      btn.textContent = box.classList.contains('open') ? '▼ Hide Solution' : '▶ Show Solution';
+    }
+
+    // ── KaTeX ──
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true }
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+
+</body>
+
+</html>
